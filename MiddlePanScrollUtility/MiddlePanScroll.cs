@@ -156,18 +156,22 @@
             if (e.ChangedButton == MouseButton.Middle)
             {
                 this.StopPanning();
-
                 e.Handled = true;
             }
         }
 
         private void StopPanning()
         {
-            if (_isPanning)
+            if (_isPanning || _isReadyToPan)
             {
                 _isPanning = false;
-                _view.VisualElement.Cursor = _oldCursor;
-                _oldCursor = null;
+                _isReadyToPan = false;
+                _isCursorJumpedInLastUpdate = false;
+                if (_oldCursor != null)
+                {
+                    _view.VisualElement.Cursor = _oldCursor;
+                    _oldCursor = null;
+                }
                 _view.VisualElement.ReleaseMouseCapture();
             }
         }
