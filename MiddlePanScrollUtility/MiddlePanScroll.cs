@@ -20,6 +20,9 @@
         private bool _isPanning = false;
         private bool _isReadyToPan = false;
 
+        private bool _isScrollByLine = true;
+        private double _accumulateYPixel = 0.0;
+
         private MiddlePanScroll(IWpfTextView view)
         {
             _view = view;
@@ -100,7 +103,28 @@
                 }
                 else
                 {
-                    _view.ViewScroller.ScrollViewportVerticallyByPixels(delta.Y);
+                    if (_isScrollByLine)
+                    {
+                        _accumulateYPixel += delta.Y;
+                        int lineCount = (int)(Math.Abs(_accumulateYPixel) / _view.LineHeight);
+                        if (lineCount > 0)
+                        {
+                            ScrollDirection dir = _accumulateYPixel > 0.0 ? ScrollDirection.Up : ScrollDirection.Down;
+                            _view.ViewScroller.ScrollViewportVerticallyByLines(dir, lineCount);
+                            if (_accumulateYPixel > 0)
+                            {
+                                _accumulateYPixel -= lineCount * _view.LineHeight;
+                            }
+                            else
+                            {
+                                _accumulateYPixel += lineCount * _view.LineHeight;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        _view.ViewScroller.ScrollViewportVerticallyByPixels(delta.Y);
+                    }
                 }
 
                 Size visualSize = _view.VisualElement.RenderSize;
