@@ -9,8 +9,12 @@
     <Import_RootNamespace>MiddlePanScrollUtility</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BaseOptionModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BaseOptionPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MiddlePanScroll.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MiddlePanScrollOption.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MiddlePanScrollPackage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MiddlePanScrollProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MiddlePanScrollOptionPage.cs" />
   </ItemGroup>
 </Project>

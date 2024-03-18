@@ -13,11 +13,6 @@
     {
         public IMouseProcessor GetAssociatedProcessor(IWpfTextView textView)
         {
-            //if (_telemetrySession == null)
-            //{
-            //    _telemetrySession = TelemetrySessionForPPT.Create(this.GetType().Assembly);
-            //}
-
             return MiddlePanScroll.Create(textView);
         }
     }

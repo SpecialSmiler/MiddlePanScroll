@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.Shell;
+using MiddlePanScroll.Options;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -25,6 +26,7 @@ namespace MiddlePanScroll
     /// </remarks>
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [Guid(MiddlePanScrollPackage.PackageGuidString)]
+    [ProvideOptionPage(typeof(MiddlePanScrollOptionPage), "Text Editor", "Middle Pan Scroll", 0, 0, true)]
     public sealed class MiddlePanScrollPackage : AsyncPackage
     {
         /// <summary>

@@ -1,4 +1,5 @@
-﻿namespace MiddlePanScroll
+﻿using MiddlePanScroll.Options;
+namespace MiddlePanScroll
 {
     using System;
     using System.Windows;
@@ -19,9 +20,11 @@
         private bool _isCursorJumpedInLastUpdate = false;
         private bool _isPanning = false;
         private bool _isReadyToPan = false;
-
-        private bool _isScrollByLine = true;
         private double _accumulateYPixel = 0.0;
+
+        private bool _isScrollByPixel = false;
+        private bool _disableHorizontal = false;
+        private int _sensitivity = 1;
 
         private MiddlePanScroll(IWpfTextView view)
         {
@@ -70,6 +73,11 @@
                 {
                     _isReadyToPan = true;
                     _lastMousePos = e.GetPosition(_view.VisualElement);
+
+                    _isScrollByPixel = MiddlePanScrollOption.Instance.IsScrollByPixel;
+                    _sensitivity = MiddlePanScrollOption.Instance.Sensitivity;
+                    _disableHorizontal = MiddlePanScrollOption.Instance.IsHorizontalDisable;
+
                     e.Handled = true;
                 }
             }
@@ -96,14 +104,19 @@
 
                 Point position = e.GetPosition(_view.VisualElement);
                 Vector delta = position - _lastMousePos;
+                delta *= _sensitivity;
 
-                if (Math.Abs(delta.X) > Math.E * Math.Abs(delta.Y))
+                if (!_disableHorizontal && Math.Abs(delta.X) > Math.E * Math.Abs(delta.Y))
                 {
                     _view.ViewScroller.ScrollViewportHorizontallyByPixels(-delta.X);
                 }
                 else
                 {
-                    if (_isScrollByLine)
+                    if (_isScrollByPixel)
+                    {
+                        _view.ViewScroller.ScrollViewportVerticallyByPixels(delta.Y);
+                    }
+                    else
                     {
                         _accumulateYPixel += delta.Y;
                         int lineCount = (int)(Math.Abs(_accumulateYPixel) / _view.LineHeight);
@@ -120,10 +133,6 @@
                                 _accumulateYPixel += lineCount * _view.LineHeight;
                             }
                         }
-                    }
-                    else
-                    {
-                        _view.ViewScroller.ScrollViewportVerticallyByPixels(delta.Y);
                     }
                 }
 
