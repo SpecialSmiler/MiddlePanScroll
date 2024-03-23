@@ -1,11 +1,9 @@
 # MiddlePanScroll
-  A VisualStudio extension that improves usage of scrolling the text editor.
+  A VisualStudio extension that improves usage about scrolling on text editor.
 
-## What is it like
-
+## Demonstration
+https://github.com/SpecialSmiler/MiddlePanScroll/assets/66404308/d048438f-30b5-4592-bd6d-e5725dc9accf
 
 ## Features
-
-1. Presssing MiddleMouseButton and dragging on TextEditor to pan its content. 
-2. When the cursor runs over one of edges of TextEditor, it jumps to the opposite. So that it can keep panning as far as you can. (It depends on how long your physical desktop is.)
-
+1. Move your mouse while pressing middle button to pan the content of TextEditor. 
+2. When the cursor runs over one edge of the editor, it jumps to the other side. So that you can keep going as long as your desktop is long enough.
